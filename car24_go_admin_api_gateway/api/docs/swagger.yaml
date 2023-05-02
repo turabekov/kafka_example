@@ -1,0 +1,718 @@
+definitions:
+  car24_car_service.Brand:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  car24_car_service.BrandListModel:
+    properties:
+      cars:
+        items:
+          $ref: '#/definitions/car24_car_service.Brand'
+        type: array
+      count:
+        type: integer
+    type: object
+  car24_car_service.CarListModel:
+    properties:
+      cars:
+        items:
+          $ref: '#/definitions/car24_car_service.CarModel'
+        type: array
+      count:
+        type: integer
+    type: object
+  car24_car_service.CarModel:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      model_data:
+        $ref: '#/definitions/car24_car_service.Model'
+      model_id:
+        type: string
+      state_number:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  car24_car_service.CreateBrand:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  car24_car_service.CreateCarModel:
+    properties:
+      id:
+        type: string
+      model_id:
+        type: string
+      state_number:
+        type: string
+    type: object
+  car24_car_service.CreateModel:
+    properties:
+      brand_id:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  car24_car_service.Model:
+    properties:
+      brand_data:
+        $ref: '#/definitions/car24_car_service.Brand'
+      brand_id:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  car24_car_service.ModelListModel:
+    properties:
+      cars:
+        items:
+          $ref: '#/definitions/car24_car_service.Model'
+        type: array
+      count:
+        type: integer
+    type: object
+  car24_car_service.UpdateBrand:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  car24_car_service.UpdateCarModel:
+    properties:
+      id:
+        type: string
+      model_id:
+        type: string
+      state_number:
+        type: string
+    type: object
+  car24_car_service.UpdateModel:
+    properties:
+      brand_id:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  response.Error:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    type: object
+  response.ResponseError:
+    properties:
+      error:
+        $ref: '#/definitions/response.Error'
+    type: object
+  response.ResponseOK:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/brand:
+    get:
+      consumes:
+      - application/json
+      description: API for getting all brands
+      parameters:
+      - default: 10
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        in: query
+        name: offset
+        type: integer
+      - in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/car24_car_service.BrandListModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Get brands
+      tags:
+      - brand
+    post:
+      consumes:
+      - application/json
+      description: API for creating brand
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: brand
+        in: body
+        name: Brand
+        required: true
+        schema:
+          $ref: '#/definitions/car24_car_service.CreateBrand'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ResponseOK'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Brand
+      tags:
+      - brand
+  /v1/brand/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: API for deleting brand
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ResponseOK'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Brand
+      tags:
+      - brand
+    get:
+      consumes:
+      - application/json
+      description: API for getting brand
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/car24_car_service.Brand'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Brand
+      tags:
+      - brand
+    put:
+      consumes:
+      - application/json
+      description: API for updating brand
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: car
+        in: body
+        name: Brand
+        required: true
+        schema:
+          $ref: '#/definitions/car24_car_service.UpdateBrand'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ResponseOK'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Brand
+      tags:
+      - brand
+  /v1/car:
+    get:
+      consumes:
+      - application/json
+      description: API for getting all cars
+      parameters:
+      - default: 10
+        in: query
+        name: limit
+        type: integer
+      - in: query
+        name: model_id
+        type: string
+      - default: 0
+        in: query
+        name: offset
+        type: integer
+      - in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/car24_car_service.CarListModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Get cars
+      tags:
+      - car
+    post:
+      consumes:
+      - application/json
+      description: API for creating car
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: car
+        in: body
+        name: Car
+        required: true
+        schema:
+          $ref: '#/definitions/car24_car_service.CreateCarModel'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ResponseOK'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Car
+      tags:
+      - car
+  /v1/car/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: API for deleting car
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ResponseOK'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Car
+      tags:
+      - car
+    get:
+      consumes:
+      - application/json
+      description: API for getting car
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/car24_car_service.CarModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Car
+      tags:
+      - car
+    put:
+      consumes:
+      - application/json
+      description: API for updating car
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: car
+        in: body
+        name: Car
+        required: true
+        schema:
+          $ref: '#/definitions/car24_car_service.UpdateCarModel'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ResponseOK'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Car
+      tags:
+      - car
+  /v1/model:
+    get:
+      consumes:
+      - application/json
+      description: API for getting all models
+      parameters:
+      - in: query
+        name: brand_id
+        type: string
+      - default: 10
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        in: query
+        name: offset
+        type: integer
+      - in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/car24_car_service.ModelListModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Get models
+      tags:
+      - model
+    post:
+      consumes:
+      - application/json
+      description: API for creating model
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: model
+        in: body
+        name: Model
+        required: true
+        schema:
+          $ref: '#/definitions/car24_car_service.CreateModel'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ResponseOK'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Model
+      tags:
+      - model
+  /v1/model/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: API for deleting model
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ResponseOK'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Model
+      tags:
+      - model
+    get:
+      consumes:
+      - application/json
+      description: API for getting model
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/car24_car_service.Model'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Model
+      tags:
+      - model
+    put:
+      consumes:
+      - application/json
+      description: API for updating model
+      parameters:
+      - default: 7d4a4c38-dd84-4902-b744-0488b80a4c01
+        description: platform-id
+        in: header
+        name: Platform-Id
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: car
+        in: body
+        name: Model
+        required: true
+        schema:
+          $ref: '#/definitions/car24_car_service.UpdateModel'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ResponseOK'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ResponseError'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Model
+      tags:
+      - model
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
